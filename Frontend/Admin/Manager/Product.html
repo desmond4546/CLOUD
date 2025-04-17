@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../Style/css/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="../../Style/css/style.css">
+    <link rel="stylesheet" href="../../Style/css/Admin/sideMenu.css">
+    <link rel="stylesheet" href="../../Style/css/Admin/header.css">
+    <link rel="stylesheet" href="../../Style/css/Admin/Manager/product.css">
+    <title>Product</title>
+</head>
+<body class="adminBody">
+    <div id="sideMenu" class="shadow-sm bg-white">
+        <div class="d-flex flex-column py-5">
+             <a href="" class="w-100 py-1 px-3 d-flex align-items-center">
+                 <img class="opacity-75" src="../../Img/Icon/dashboard.png" alt="">
+                 <p class="text-gray ms-3">Dashboard</p>
+             </a>
+             <a href="" class="w-100 py-1 px-3 d-flex align-items-center">
+                 <img class="opacity-75" src="../../Img/Icon/product.png" alt="">
+                 <p class="text-gray ms-3">Product</p>
+             </a>
+             <a href="" class="w-100 py-1 px-3 d-flex align-items-center">
+                 <img class="opacity-75" src="../../Img/Icon/customer.png" alt="">
+                 <p class="text-gray ms-3">Customer</p>
+             </a>
+             <a href="" class="w-100 py-1 px-3 d-flex align-items-center">
+                 <img class="opacity-75" src="../../Img/Icon/staff.png" alt="">
+                 <p class="text-gray ms-3">Staff</p>
+             </a>
+             <a href="" class="w-100 py-1 px-3 d-flex align-items-center">
+                 <img class="opacity-75" src="../../Img/Icon/inbox.png" alt="">
+                 <p class="text-gray ms-3">Inbox</p>
+             </a>
+             <a href="" class="w-100 py-1 px-3 d-flex align-items-center">
+                <img class="opacity-75" src="../../Img/Icon/profile.png" alt="">
+                <p class="text-gray ms-3">Profile</p>
+            </a>
+             <a href="" class="w-100 py-1 px-3 d-flex align-items-center">
+                 <img class="opacity-75" src="../../Img/Icon/signOut.png" alt="">
+                 <p class="text-gray ms-3">Sign Out</p>
+             </a>
+        </div>
+        <footer class="text-center">
+             <small class="text-gray">&copy; 2025 A-PLUS Sdn Bhd</small>
+        </footer>
+     </div>
+         <!--Header-->
+<header class="w-100 shadow-sm d-flex align-items-center bg-white">
+    <div class="container-xl d-flex justify-content-between align-items-center">
+        <!--Logo-->
+        <img src="../../Img/Icon/logo.png" id="logoImg">
+
+        <!--Menus-->
+        <div class="d-flex justify-content-between align-items-center" id="headerMenuContainer">
+            <img src="https://sm.askmen.com/t/askmen_in/article/f/facebook-p/facebook-profile-picture-affects-chances-of-gettin_fr3n.1200.jpg" alt="" class="smallProfileImg shadow-sm me-2">
+            <div class="d-flex align-items-start flex-column">
+                <p class="text-gray"><b>LIM CUAN HEI</b></p>
+                <p class="text-gray"><small><i>cuanhei@gmail.com</i></small></p>
+            </div>
+        </div>
+    </div>
+</header>
+    
+
+    <div class="page bg-light d-flex align-items-center justify-content-center">
+        <div class="bg-white rounded shadow-sm container-xl maxPageHeight">
+            <div class="d-flex justify-content-between align-items-center row">
+                <div class="d-flex p-sm-0 py-2 ps-1 py-sm-3 order-2 order-sm-1 col-sm-11 flex-wrap justify-content-between justify-content-sm-start">
+                    <a class="btn-primary btn btn-sm me-1 ms-2" href="#">Male</a>
+                    <a class="btn-secondary btn btn-sm me-1">Female</a>
+                    <a class="btn-primary btn btn-sm me-1">Top</a>
+                    <a class="btn-secondary btn btn-sm me-1">Bottom</a>
+                    <a class="btn-secondary btn btn-sm me-1">Other</a>
+                </div>
+                <div class=" order-1 order-sm-2 col-sm-1 py-sm-3 my-1">
+                    <button class="btn btn-sm btn-outline-primary shadow-sm w-100">Add</button>
+                </div>
+            </div>
+            
+
+            <!--Search Bar-->
+            <form class="searchBar container-sm bg-white shadow-sm mb-1 mx-auto rounded-pill border" action="" method="get">
+                <input type="text" placeholder="Name">
+                <input type="submit" value="Search">
+            </form>
+            
+            <p class="text-gray text-center my-2"><small><i>(100 Records Found)</i></small></p>
+
+            <div id="productMainContainer">
+                
+                <div class="row p-2 shadow-sm rounded border mx-1 mb-2">
+
+                    <div class="col-sm-3 d-flex">
+                        <div class="d-flex align-items-center ">
+                            <img src="../../Img/Icon/shirt.png" alt="" class="iconImg">
+                        </div>
+                        
+                        <div class="d-flex flex-column justify-content-center ms-3 text-start text-gray">
+                            <h6 class="m-0">Product Name</h6>
+                            <p><small>5 JUN 2024</small></p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 d-flex align-items-center flex-wrap">
+                        <p class="badge rounded-pill text-bg-primary me-1 my-1">Clothes</p>
+                        <p class="badge rounded-pill text-bg-primary me-1 my-1">Clothes</p>
+                        <p class="badge rounded-pill text-bg-primary me-1 my-1">Clothes</p>
+                    </div>
+
+                    <div class="col-md-2 d-flex align-items-center">
+                        <h6 class="m-0 ms-1">RM 100.00</h6>
+                        <p class="ms-1 d-md-none d-lg-block"><small><i>(per unit)</i></small></p>
+                    </div>
+
+                    <div class="col-md-2 d-flex align-items-center">
+                        <p class="ms-1">Stock :</p>
+                        <h6 class="m-0 ms-1">20</h6>
+                        <p class="ms-1 d-md-none d-lg-block"><small><i>(unit)</i></small></p>
+                    </div>
+
+                    <div class="col-md-1 d-flex align-items-center justify-content-end">
+                        <button class="btn btn-sm btn-primary w-100 my-1 my-sm-0">More</button>
+                    </div>
+
+                </div>
+
+                <div class="row p-2 shadow-sm rounded border mx-1 mb-2">
+
+                    <div class="col-sm-3 d-flex">
+                        <div class="d-flex align-items-center ">
+                            <img src="../../Img/Icon/shirt.png" alt="" class="iconImg">
+                        </div>
+                        
+                        <div class="d-flex flex-column justify-content-center ms-3 text-start text-gray">
+                            <h6 class="m-0">Product Name</h6>
+                            <p><small>5 JUN 2024</small></p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 d-flex align-items-center flex-wrap">
+                        <p class="badge rounded-pill text-bg-primary me-1 my-1">Clothes</p>
+                        <p class="badge rounded-pill text-bg-primary me-1 my-1">Clothes</p>
+                        <p class="badge rounded-pill text-bg-primary me-1 my-1">Clothes</p>
+                    </div>
+
+                    <div class="col-md-2 d-flex align-items-center">
+                        <h6 class="m-0 ms-1">RM 100.00</h6>
+                        <p class="ms-1 d-md-none d-lg-block"><small><i>(per unit)</i></small></p>
+                    </div>
+
+                    <div class="col-md-2 d-flex align-items-center">
+                        <p class="ms-1">Stock :</p>
+                        <h6 class="m-0 ms-1">20</h6>
+                        <p class="ms-1 d-md-none d-lg-block"><small><i>(unit)</i></small></p>
+                    </div>
+
+                    <div class="col-md-1 d-flex align-items-center justify-content-end">
+                        <button class="btn btn-sm btn-primary w-100 my-1 my-sm-0">More</button>
+                    </div>
+
+                </div>
+                
+            </div>
+                
+            </div>
+        </div>
+    </div>
+</body>
+</html>
