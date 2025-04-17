@@ -1,0 +1,18 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<link rel="stylesheet" href="../Style/css/Admin/header.css">
+<!--Header-->
+<header class="w-100 shadow-sm d-flex align-items-center bg-white">
+    <div class="container-xl d-flex justify-content-between align-items-center">
+        <!--Logo-->
+        <img src="../Img/Logo/logo.png" id="logoImg">
+
+        <!--Menus-->
+        <div class="d-flex justify-content-between align-items-center" id="headerMenuContainer">
+            <img src="https://sm.askmen.com/t/askmen_in/article/f/facebook-p/facebook-profile-picture-affects-chances-of-gettin_fr3n.1200.jpg" alt="" class="smallProfileImg shadow-sm me-2">
+            <div class="d-flex align-items-start flex-column">
+                <p class="text-gray"><b>LIM CUAN HEI</b></p>
+                <p class="text-gray"><small><i>cuanhei@gmail.com</i></small></p>
+            </div>
+        </div>
+    </div>
+</header>
