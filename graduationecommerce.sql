@@ -34,7 +34,7 @@ CREATE TABLE `account` (
   `Role` char(1) NOT NULL,
   `Status` bit(1) NOT NULL,
   `ImgPath` varchar(200) DEFAULT NULL,
-  `DateReg` date NOT NULL DEFAULT current_timestamp(),
+  `DateReg` datetime NOT NULL current_timestamp,
   `PersonID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -109,7 +109,7 @@ CREATE TABLE `orders` (
   `ID` int(11) NOT NULL,
   `Address` varchar(200) NOT NULL,
   `StatusID` int(11) NOT NULL,
-  `Date` date NOT NULL DEFAULT current_timestamp(),
+  `Date` datetime NOT NULL current_timestamp,
   `AccountID` int(11) NOT NULL,
   `TransactionID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -156,7 +156,7 @@ CREATE TABLE `product` (
   `Price` double NOT NULL,
   `ImgPath` varchar(200) DEFAULT NULL,
   `Status` bit(1) NOT NULL DEFAULT b'1',
-  `DateRelease` date NOT NULL DEFAULT current_timestamp()
+  `DateRelease` datetime NOT NULL current_timestamp
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
