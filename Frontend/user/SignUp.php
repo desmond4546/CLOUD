@@ -21,14 +21,14 @@
             $con = new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
             
             //Create Person
-            $sql = "INSERT INTO Person (Name, Email, IC) VALUES (NULL, NULL, NULL)";
+            $sql = "INSERT INTO person (Name, Email, IC) VALUES (NULL, NULL, NULL)";
             $stmt = $con->prepare($sql);
             $stmt->execute();
             
             //Create Account
             $personID = $con->insert_id; // This gets the ID of the last inserted record
             $password = password_hash($password, PASSWORD_BCRYPT);
-            $sql = "INSERT INTO Account (Username, Password, Role, Status, PersonID) VALUES (?,?,'M',1,?)";
+            $sql = "INSERT INTO account (Username, Password, Role, Status, PersonID) VALUES (?,?,'M',1,?)";
             $stmt = $con->prepare($sql);
             $stmt ->bind_param('ssi', $username,$password,$personID);
             $stmt->execute();
@@ -53,11 +53,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../Img/Logo/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="../Style/css/bootstrap/bootstrap.css">
     <link rel="stylesheet" href="../Style/css/style.css">
     <title>Sign Up</title>
 </head>
-<body class="vh-100 bg-light">
+<body class=" bg-light">
     
     <?php include "Header.php" ?>
     <?php
@@ -96,7 +97,7 @@
                                 <p><i class="text-danger"><?php echo isset($error["conPassword"])?$error["conPassword"]:''?></i></p>
                             </div>
                             <div class="d-flex align-items-center my-4">
-                                <input type="checkbox" class="ui-checkbox">
+                                <input type="checkbox" class="ui-checkbox" required>
                                 <label for="" class="text-gray d-flex align-items-center"><small>I agree to the <a href="terms.html" class="text-gray">Terms and Conditions</a> and <a href="privacy.html" class="text-gray">Privacy Policy</a>.</small> </label>
                             </div>
                             <button type="submit" class="btn btn-dark w-100 py-2">Sign Up</button>

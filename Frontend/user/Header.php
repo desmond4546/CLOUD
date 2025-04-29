@@ -13,7 +13,7 @@
             <?php
                 if(isset($_SESSION['LoggedUser'])) {
                     echo "<a href='Cart.php'><img src='../Img/Icon/cart.png' class='iconImg ms-sm-3 opacity-50'></a>"
-                       . "<a href='Inbox.php'><img src='../Img/Icon/inbox.png' class='iconImg ms-sm-3 opacity-50'></a>";
+                       . "<a href='OrderHistory.php'><img src='../Img/Icon/orderHistory.png' class='iconImg ms-sm-3 opacity-50'></a>";
                     printf("<a href='Profile.php'><img src='%s' class='iconImg ms-sm-3 rounded-pill'></a>",(isset($_SESSION['LoggedUser']['ImgPath'])?$_SESSION['LoggedUser']['ImgPath']:"../Img/Profile/NoProfile.png"));
                 } else {
                     echo "<a href='SignUp.php'><img src='../Img/Icon/guest.png' class='iconImg ms-sm-3 opacity-50'></a>";

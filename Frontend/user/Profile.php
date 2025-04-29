@@ -1,9 +1,10 @@
 <?php
     session_start();
     
-    if(!$_SESSION['LoggedUser']){ header('Location: Home.php');}
+    if(!isset($_SESSION['LoggedUser'])){ header('Location: Home.php');}
     
     require_once '../../Backend/env.php';
+    require '../../Backend/File.php';
     
     $updated = false;
     
@@ -39,8 +40,6 @@
             $error = array_filter($error);
             if(empty($error)){
                 
-                include '../../Backend/File.php';
-
                 $con = new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
             
                 $sql = "UPDATE PERSON SET Name = ?, Email = ?, IC = ? WHERE ID = ?";
@@ -88,6 +87,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../Img/Logo/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="../Style/css/bootstrap/bootstrap.css">
     <link rel="stylesheet" href="../Style/css/style.css">
     <title>Profile</title>
@@ -117,7 +117,7 @@
                 <div class="row d-flex align-items-center justify-content-around p-2">
                     <div class="col-lg-3">
                         <p class="text-gray"><i>Role</i></p>
-                        <div class="tag rounded-pill <?php echo ($_SESSION['LoggedUser']['Role'] == 'M')?"bg-primary":"bg-success"?>"><p><?php echo ($_SESSION['LoggedUser']['Role'] == 'M')?"Member":"VIP"?></p></div>
+                        <div class="tag rounded-pill <?php echo ($_SESSION['LoggedUser']['Role'] == 'M')?"bg-dark":"bg-primary"?>"><p><?php echo ($_SESSION['LoggedUser']['Role'] == 'M')?"Member":"VIP"?></p></div>
                     </div>
                     <div class="col-lg-3">
                         <p class="text-gray"><i>Date Joined</i></p>
@@ -168,7 +168,7 @@
 
                     <br>
                     <input class="btn btn-primary btn-sm mt-5 w-100" type="submit" name="Update" value="Update Profile">
-                    <input class="btn btn-danger btn-sm mt-3 w-100" type="submit" name="SignOut" value="Sign Out">
+                    <input class="btn btn-dark btn-sm mt-3 w-100" type="submit" name="SignOut" value="Sign Out">
                 </div>
 
             </div>

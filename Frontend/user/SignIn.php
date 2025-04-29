@@ -3,6 +3,7 @@
     session_start();
     
     require '../../Backend/Validation.php';
+    require '../../Backend/TransactionBackend.php';
     require_once '../../Backend/env.php';
     
     if($_SERVER["REQUEST_METHOD"]=="POST"){
@@ -31,23 +32,30 @@
                 $password = $oriPassword;
                 if (password_verify($password, $user['Password'])) {
                     
-                    //Valid Sign In
-                    $_SESSION['LoggedUser'] = $user;
-                    $_SESSION['LoggedUser']['Password'] = $oriPassword;
-                    
-                    //Get Personal Details
-                    $sql = "SELECT * FROM person WHERE ID = ?";
-                    $stmt = $con->prepare($sql);
-                    $stmt->bind_param("i", $_SESSION['LoggedUser']['PersonID']);  // Bind the username parameter
-                    $stmt->execute();
-                    $_SESSION['LoggedUser']['Person'] = ($stmt->get_result())->fetch_assoc();
-                    
-                    if($_SESSION['LoggedUser']['Role'] == 'M'){ //Member
-                        header("Location: Home.php");
-                    }else{ //Admin
-                        header("Location: ../Admin/Dashboard.php");
+                    if ($user['Status'] == 0){
+                        $error['Banned'] = "Sorry, your account has been BANNED!";
                     }
-                    exit;
+                    else{
+                        //Valid Sign In
+                        $_SESSION['LoggedUser'] = $user;
+                        $_SESSION['LoggedUser']['Password'] = $oriPassword;
+
+                        //Get Personal Details
+                        $sql = "SELECT * FROM person WHERE ID = ?";
+                        $stmt = $con->prepare($sql);
+                        $stmt->bind_param("i", $_SESSION['LoggedUser']['PersonID']);  // Bind the username parameter
+                        $stmt->execute();
+                        $_SESSION['LoggedUser']['Person'] = ($stmt->get_result())->fetch_assoc();
+
+                        $_SESSION['TotalSpend'] = getTotalAmountSpend($_SESSION['LoggedUser']['ID']);
+
+                        if($_SESSION['LoggedUser']['Role'] == 'M' || $_SESSION['LoggedUser']['Role'] == 'V'){ // M = Member  V = VIP
+                            header("Location: Home.php");
+                        }else{ //Admin
+                            header("Location: ../Admin/Dashboard.php");
+                        }
+                        exit;
+                    }
                 } else {
                     $error['password'] = "<b>Incorrect Password</b>. Please try again.";
                 }
@@ -67,12 +75,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../Img/Logo/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="../Style/css/bootstrap/bootstrap.css">
     <link rel="stylesheet" href="../Style/css/style.css">
     <title>Sign In</title>
 </head>
-<body class="vh-100 bg-light">
+<body class=" bg-light">
     <?php include "Header.php" ?>
+    <?php
+        if(isset($error['Banned'])){
+             printf(
+                '<div class="notification bg-danger shadow-sm text-white w-100 rounded px-4 py-2 my-1 justify-content-between" id="notiContainer">
+                    <p><b>%s</b></p>
+                    <p onclick="hideContainer(\'%s\')" style="cursor:pointer;"><b>X</b></p>
+                </div>',
+                $error['Banned'],
+                'notiContainer'
+            );
+        }
+    ?>
     <div class="d-flex align-items-center justify-content-center mt-5">
         <div class="container">
             <div class="row justify-content-center">
@@ -103,5 +124,6 @@
             </div>
         </div>
     </div>
+    <script src="../Style/js/js.js"></script>
 </body>
 </html>

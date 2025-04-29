@@ -28,6 +28,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../Img/Logo/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="../Style/css/bootstrap/bootstrap.css">
     <link rel="stylesheet" href="../Style/css/style.css">
     <link rel="stylesheet" href="../Style/css/User/shop.css">
@@ -68,10 +69,10 @@
             foreach($products as $product){
                 printf('
                     <div class="container-sm mx-auto bg-white shadow-sm rounded row productContainer p-lg-2 mb-4 border">
-                        <div class="col-sm-5 d-flex justify-content-center align-items-center">
+                        <div class="col-lg-5 d-flex justify-content-center align-items-center">
                             <img class="productImg" src="%s" alt="">
                         </div>
-                        <div class="col-sm-7 d-flex flex-column justify-content-between">
+                        <div class="col-lg-7 d-flex flex-column justify-content-between">
                             <div>
                                 <h2>%s</h2>
                                 <p>%s</p>
@@ -90,10 +91,11 @@
                                 <small><i class="text-gray">Date Released : %s</i></small>
                             </div>
                             <div class="d-flex justify-content-center align-items-center">
-                                <a class="btn btn-sm btn-outline-primary" href="ProductDetails.php?ProductID=%d">More</a>
+                                %s
                             </div>
                         </div>
-                    </div>',$product->Price, $product->DateRelease, $product->ID);
+                    </div>
+                    </div>',$product->Price, $product->DateRelease, ($product->Quantity >0)?'<a class="btn btn-sm btn-outline-primary" href="ProductDetails.php?ProductID='.$product->ID.'">More</a>':'<p class="btn btn-sm btn-secondary text-white opacity-50">Out Of Stock</p>');
             }
         ?>
 

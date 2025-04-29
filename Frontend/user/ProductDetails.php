@@ -18,7 +18,7 @@
         
         if($quantity!=null && $quantity > 0){
         
-            addItemToCart($productID, $quantity);
+            addItemToCart($_SESSION['LoggedUser']['ID'], $productID, $quantity);
             $addedToCart = true;
         }
         
@@ -35,6 +35,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../Img/Logo/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="../Style/css/bootstrap/bootstrap.css">
     <link rel="stylesheet" href="../Style/css/style.css">
     <link rel="stylesheet" href="../Style/css/User/shop.css">
@@ -74,10 +75,10 @@
             }
             printf('<form class="container-sm mx-auto bg-white shadow-sm rounded row productContainer p-lg-2 p-3 pb-lg-4 my-lg-4 mt-4" method="post" onsubmit="enableInputBeforeSubmit(\'quantity\')>
                         <input type="hidden" name="productID" value="%d">
-                        <div class="col-sm-5 d-flex justify-content-center align-items-center">
+                        <div class="col-lg-5 d-flex justify-content-center align-items-center">
                             <img class="productImg" src="%s" alt="">
                         </div>
-                        <div class="col-sm-7 d-flex flex-column justify-content-between">
+                        <div class="col-lg-7 d-flex flex-column justify-content-between">
                             <div>
                                 <h2>%s</h2>
                                 <p>%s</p>

@@ -5,6 +5,7 @@
         header("Location: Home.php");
     }
     $total = 0.0;
+    $accountID = $_SESSION['LoggedUser']['ID'];
     
     require_once '../../Backend/env.php';
     require "../../Backend/CartBackend.php";
@@ -16,11 +17,11 @@
         $qty = isset($_POST['productQty']) ? $_POST['productQty'] : 0;
 
         if (isset($_POST['remove'])) {
-            removeItemFromCart($id);
+            removeItemFromCart($accountID, $id);
         } elseif (isset($_POST['add'])) {
-            addItemToCart($id, 1);
+            addItemToCart($accountID, $id, 1);
         } elseif (isset($_POST['decrease'])) {
-            removeItemQtyFromCart($id, 1);
+            removeItemQtyFromCart($accountID, $id, 1);
         }
 
         header("Location: " . $_SERVER['REQUEST_URI']);
@@ -28,14 +29,17 @@
     }
 
     
-    $cart = getCart();
-    $cart = array_filter($cart);
+    $cart = getCart($accountID);
+    if (!is_array($cart)) {
+        $cart = $cart ? [$cart] : [];
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../Img/Logo/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="../Style/css/bootstrap/bootstrap.css">
     <link rel="stylesheet" href="../Style/css/style.css">
     <link rel="stylesheet" href="../Style/css/User/shop.css">
@@ -51,15 +55,16 @@
         <div class="mx-auto row order-2 w-100">
             <div class="col-lg-8">
                 <?php
-
-                    foreach($cart as $productID => $quantity){
+                    foreach($cart as $cartRow){
                         
                         $updatedItemQty = false;
-                        $product = getProductByID($productID);
-                        if($quantity > $product['Quantity']){
+                        
+                        $product = getProductByID($cartRow->ProductID);
+                        if($cartRow->Quantity > $product['Quantity']){
                             
                             $quantity = $product['Quantity'];
-                            updateItemInCart($productID, $quantity);
+                            updateItemInCart($accountID, $cartRow->ProductID, $quantity);
+                            $cartRow->Quantity = $quantity;
                             $updatedItemQty = true;
                         }
                         printf('                
@@ -76,7 +81,7 @@
                                             </div>
                                         </div>
                                         <p>%s</p>
-                                        <div class="d-flex mt-2">',$productID,$product['ImgPath'],$product['Name'],$product['Desc']);
+                                        <div class="d-flex mt-2">',$product['ID'],$product['ImgPath'],$product['Name'],$product['Desc']);
                         
                         foreach(getProductCategories($product['ID']) as $category){
                             printf('<p class="badge rounded-pill text-bg-primary me-1">%s</p>',$category->Text);
@@ -97,10 +102,11 @@
                                         </div>
                                     </div>
                                 </div>
-                            </form>',$product['Price'], $product['Name'], $product['Quantity'], ($updatedItemQty)?"Note : The quantity has been adjusted due to stock balance doesn't reach the original quantity in cart.":"", ($quantity==1)?"remove":"decrease", ($quantity ==1)?' onclick="return confirmRemove()"':"",1, $product['Quantity'], $quantity);
+                            </form>',$product['Price'], $product['Name'], $product['Quantity'], ($updatedItemQty)?"Note : The quantity has been adjusted due to stock balance doesn't reach the original quantity in cart.":"", ($cartRow->Quantity==1)?"remove":"decrease", ($cartRow->Quantity ==1)?' onclick="return confirmRemove()"':"",1, $product['Quantity'], $cartRow->Quantity);
                     
-                        $total += $product['Price'] * $quantity;
+                        $total += $product['Price'] * $cartRow->Quantity;
                     }
+                
                 ?>
             </div>
             <?php if(empty($cart)){
@@ -129,9 +135,9 @@
                             $index = 0;
                             $subtotal = 0.0;
                             
-                            foreach($cart as $productID => $quantity){
+                            foreach($cart as $cartRow){
                                  
-                                $product = getProductByID($productID);
+                                $product = getProductByID($cartRow->ProductID);
                                 $index++;
                                 printf(
                                    '<tr class="text-gray">
@@ -139,8 +145,8 @@
                                         <td><p>%s</p></td>
                                         <td class="text-center"><p>%d</p></td>
                                         <td class="text-center"><p>%.2f</p></td>
-                                    </tr>',$index,$product['Name'],$quantity, $product['Price'] * $quantity);
-                                $subtotal += $product['Price'] * $quantity;
+                                    </tr>',$index,$product['Name'], $cartRow->Quantity, $product['Price'] * $cartRow->Quantity);
+                                $subtotal += $product['Price'] * $cartRow->Quantity;
                              }
                         ?>
                         <tr>
@@ -231,22 +237,26 @@
                     <script>
                         updatePercent("freeShippingPercentage",%.1f);
                     </script>',(($subtotal/1000.0)*100)>=100?100:($subtotal/1000.0)*100, $subtotal, (($subtotal/1000.0)*100)>=100?100:($subtotal/1000.0)*100);
+                
+                $totalSpend = $_SESSION['TotalSpend'];
+                printf(
+                    '<div class="d-flex justify-content-between">
+                        <div class="bigProfileImg shadow-sm border d-flex justify-content-center align-items-center" id="memberPercentage">
+                           <div class="midProfileImg shadow-sm bg-white border d-flex justify-content-center align-items-center">
+                                <p class="text-gray"><b>%.1f%%</b></p>
+                           </div>
+                        </div>
+                        <div class="d-flex flex-column justify-content-center ms-2">
+                            <h6 class="text-gray">VIP Offer</h6>
+                            <p class="text-gray">You currently a %s role.</p>
+                            <p class="text-gray"><small><i>When total spending reached RM 5000.00 will upgrade to VIP role.</i></small></p>
+                        </div>
+                    </div>
+                    <script>
+                        updatePercent("memberPercentage",%f);
+                    </script>',(($totalSpend/5000.0)*100)>=100?100:($totalSpend/5000.0)*100, ($_SESSION['LoggedUser']['Role'] == 'M')?"Member":"VIP", (($totalSpend/5000.0)*100)>=100?100:($totalSpend/5000.0)*100);
             ?>
-            <div class="d-flex justify-content-between">
-                <div class="bigProfileImg shadow-sm border d-flex justify-content-center align-items-center" id="memberPercentage">
-                   <div class="midProfileImg shadow-sm bg-white border d-flex justify-content-center align-items-center">
-                        <p class="text-gray"><b>100%</b></p>
-                   </div>
-                </div>
-                <div class="d-flex flex-column justify-content-center ms-2">
-                    <h6 class="text-gray">VIP Offer</h6>
-                    <p class="text-gray">You currently under a member role.</p>
-                    <p class="text-gray"><small><i>When total spending reached RM 5000.00 will upgrade to VIP role.</i></small></p>
-                </div>
-            </div>
-            <script>
-                updatePercent("memberPercentage",10);
-            </script>
+            
 
         </div>
     </div>
