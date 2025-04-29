@@ -95,3 +95,93 @@ function validateIC($ic){
         return "<b>Invalid IC Format</b>, please enter a real IC number.";
     }
 }
+
+function validateProductName($productName){
+    
+    if(isNull($productName)){
+        return "<b>Invalid Product Name</b>, product name cannot be empty.";
+    } else if (strlen($productName) > 20 || strlen($productName) < 1) {
+        return "<b>Invalid Product Name</b>, product name should be in between length of 1 and 20";
+    }
+}
+
+function validateProductDetails($productDetails){
+    
+    if(isNull($productDetails)){
+        return "<b>Invalid Product Details</b>, product details cannot be empty.";
+    } else if (strlen($productDetails) > 199 || strlen($productDetails) < 3) {
+        return "<b>Invalid Product Details</b>, product details should be in between length of 3 and 199";
+    }
+}
+
+function validateProductPrice($productPrice){
+    
+    if (filter_var($productPrice, FILTER_VALIDATE_FLOAT) === false) {
+        return "<b>Invalid Product Price</b>, product price must be a double value.";
+    }
+    if($productPrice <= 0){
+        return "<b>Invalid Product Price</b>, product price must not be RM 0.00";
+    }
+}
+
+function validateDefaultStockQty($stockQty){
+    
+    if (filter_var($stockQty, FILTER_VALIDATE_INT) === false) {
+        return "<b>Invalid Default Stock Quantity</b>, default quantity should be an integer.";
+    }
+    if($stockQty < 0){
+        return "<b>Invalid Default Stock Quantity</b>, the minimum default stock quantity is 0.";
+    }
+}
+
+
+function validateProductCategory($productCategory){
+    
+    if($productCategory==null){
+        return "<b>Invalid Product Category</b>, please select the related categories for the product.";
+    }
+}
+
+function validateProductImg($productImg){
+    
+    if($productImg['name'] == null){
+        return "<b>Invalid Product Image</b>, please select the product image.";
+    }
+}
+
+function validatePaymentForm($address, $cardNo, $cardHolder, $expDate, $cvv) {
+    $errors = [];
+
+    // Address Validation
+    if (empty($address) || strlen(trim($address)) < 10) {
+        $errors[] = "Address must be at least 10 characters long.";
+    }
+
+    // Card Number Validation
+    if (!preg_match('/^\d{16}$/', $cardNo)) {
+        $errors[] = "Card number must be exactly 16 digits.";
+    }
+
+    // Card Holder Validation
+    if (empty($cardHolder) || !preg_match('/^[A-Za-z\s]{2,30}$/', $cardHolder)) {
+        $errors[] = "Card holder name must be 2-30 characters, letters and spaces only.";
+    }
+
+    // Expiry Date Validation
+    if (empty($expDate)) {
+        $errors[] = "Expiry date is required.";
+    } else {
+        $today = strtotime(date('Y-m-01'));
+        $exp = strtotime(date('Y-m-01', strtotime($expDate)));
+        if ($exp < $today) {
+            $errors[] = "Expiry date must be in the future.";
+        }
+    }
+
+    // CVV Validation
+    if (!preg_match('/^\d{3}$/', $cvv)) {
+        $errors[] = "CVV must be exactly 3 digits.";
+    }
+
+    return $errors;
+}
