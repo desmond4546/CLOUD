@@ -17,6 +17,10 @@
     background-color: rgba(0,0,0,0.3);
 }
 
+.newProductImg{
+    height: 20vh;
+}
+
 @keyframes changeBg {
     0%   { background-image: url('../../../Img/Hero/1.png'); }
     20%  { background-image: url('../../../Img/Hero/1.png'); }
