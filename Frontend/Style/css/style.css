@@ -1,11 +1,19 @@
+body{
+    padding-top: 5vh;
+}
+.adminBody{
+    padding-top: 0;
+}
 .page{
     margin-top: 5.5vh;
     margin-left: calc(12%);
     min-height: 94.5vh;
+    overflow-y: hidden;
     border: 1px solid transparent; /* A border prevents margin collapse */   
 }
 .maxPageHeight{
     min-height: 90vh;
+    overflow-y: hidden;
 }
 
 .w-80, .w-80-sm{
@@ -35,6 +43,11 @@ hr{
     cursor: pointer;
 }
 
+.enlarge{
+    display: none;
+    animation: enlarge 0.15s;
+}
+
 /* Pop Up */
 .popUpContainer{
     display: none;
@@ -44,8 +57,10 @@ hr{
     width: 100%;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.8);
+    z-index:20;
 }
 .popUpContent{
+    z-index: 21;
     animation: enlarge 0.5s;
 }
 
@@ -309,12 +324,10 @@ select {
 
 @keyframes grow {
     from {
-        opacity:0;
-        /*transform: translateY(-100%);*/
+        height: 0%;
     }
     to {
-        /*transform: translateY(0%);*/
-        opacity:1;
+        height:100%;
     }
 }
 
@@ -324,6 +337,7 @@ select {
         padding-bottom: 10vh;
     }
     .adminBody{
+        padding-top: 0;
         padding-bottom: 0;
     }
     .w-80-sm {
