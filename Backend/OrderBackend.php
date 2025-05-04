@@ -48,7 +48,7 @@ function addOrderList($orderID, $cart){
     $success = false;
     try{
         $con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-        $sql = "INSERT INTO orderList VALUES (?, ?, ?)";
+        $sql = "INSERT INTO orderlist VALUES (?, ?, ?)";
         $stmt = $con->prepare($sql);
         foreach( $cart as $cartRow){
 

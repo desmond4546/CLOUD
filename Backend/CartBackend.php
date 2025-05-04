@@ -145,7 +145,7 @@ function removeItemQtyFromCart($accountID, $productID, $quantity){
     
     if($product->Quantity > $quantity){
         
-         $sql = "UPDATE cart SET quantity = quantity - ?";
+        $sql = "UPDATE cart SET Quantity = Quantity - ?";
         $stmt = $con->prepare($sql);
         $stmt->bind_param("i", $quantity);
         $stmt->execute();
